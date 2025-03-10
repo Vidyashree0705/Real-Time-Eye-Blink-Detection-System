@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blink Detection</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/static/background.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .content {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .video-container {
+            margin-top: 20px;
+        }
+
+        .video-container img {
+            border: 2px solid white;
+            border-radius: 10px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 3em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <h1>Eye Blink Detection</h1>
+        <div class="button-container">
+            <button class="btn btn-success" onclick="startCamera()">Start</button>
+            <button class="btn btn-danger" onclick="stopCamera()">Stop</button>
+        </div>
+        <div class="video-container">
+            <img id="videoFeed" src="{{ url_for('video_feed') }}" alt="Video Feed" style="display: none;">
+        </div>
+    </div>
+
+    <script>
+        function startCamera() {
+            fetch('/start_camera', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('videoFeed').style.display = 'block';
+                });
+        }
+
+        function stopCamera() {
+            fetch('/stop_camera', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('videoFeed').style.display = 'none';
+                });
+        }
+    </script>
+</body>
+
+</html>
